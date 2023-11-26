@@ -7,8 +7,11 @@ struct new_product{
     char depa[20];
 	char nombre[20];	
 };
-void nuevo(int id,float precio,int stock,char depa[],char nombre[], int cont){
-	struct new_product tabla[20];
+
+
+
+void nuevo(struct new_product tabla[],int cont){
+	
 	if(cont<=20){
 	printf("\n ====== NUEVO PRODUCTO ======\n");
 	printf("A que departamento pertenece su producto?: ");
@@ -32,8 +35,20 @@ void nuevo(int id,float precio,int stock,char depa[],char nombre[], int cont){
 	}
 }
 
-void modificar(int comp_prec, int comp_stock,  int cont){
-	nuevo();
+void imprimir_lista(struct new_product tabla[],int cont){
+	if(cont<=20){
+		printf("\nID\t\tDepartamento\t\tNombre\t\tPrecio\t\tStock\n\n");
+		for(int i =0;i<cont;i++){
+			
+			printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
+		}
+		
+	}
+	
+	
+}
+
+void modificar(struct new_product tabla[],int comp_prec,int comp_stock,int cont ){
 	int buscar;
 	printf("Ingrese la id del producto al que desea modificar: ");
 	scanf("%d", &buscar);
@@ -43,8 +58,8 @@ void modificar(int comp_prec, int comp_stock,  int cont){
 		for(int i=0;i<cont;i++){
 							
 			if(buscar == tabla[i].id){
-				printf("\nCual es el nuevo precio de %s: ", tabla[i].precio);
-				scanf("%f", &tabla[i].precio);
+				printf("\nCual es el nuevo precio de %s: ", tabla[i].nombre);
+				scanf("%f",&tabla[i].precio);
 				printf("\n====== El precio fue actualizado correctamente ======\n");
 				break;
 			}				
@@ -55,7 +70,7 @@ void modificar(int comp_prec, int comp_stock,  int cont){
 		for(int i=0;i<cont;i++){
 			
 			if(buscar == tabla[i].id){
-				printf("\nCual es la nueva cantidad de %s: ", tabla[i].stock);
+				printf("\nCual es la nueva cantidad de %s: ", tabla[i].nombre);
 				scanf("%d", &tabla[i].stock);
 				printf("\n====== el stock fue actualizado correctamente ======\n");
 				break;
@@ -64,8 +79,10 @@ void modificar(int comp_prec, int comp_stock,  int cont){
 	}
 }
 	
+
+ 
 int main(){
-	struct new_product p;
+	struct new_product tabla[20];
 	char modif[2];
 	int cont=0;
 	char opc;
@@ -95,7 +112,7 @@ int main(){
 		default: 
 			break;			
 		case 'a':	//AÑADIR PRODUCTO
-		nuevo(p.id,p.precio,p.stock,p.depa,p.nombre,cont);
+		nuevo(tabla,cont);
 		cont++;					
 			break;			
 			
@@ -106,12 +123,12 @@ int main(){
 			comp_prec = strcmp(modif, "precio");
 			comp_stock = strcmp(modif, "stock");
 			
-			//imprimir_lista(datos.id, datos.depart, datos.nombre, datos.precio, datos.stock, cont);
+			imprimir_lista(tabla,cont);
 			printf("\nEstos son los productos que hay actualmente en el inventario\n");			
-			modificar(comp_prec, comp_stock,  cont);		
-			break;
+			modificar(tabla,comp_prec, comp_stock,  cont);		
+			
 		
-					
+			
 			break;
 			
 		case 'c':     // MOSTRAR INVENTARIO
