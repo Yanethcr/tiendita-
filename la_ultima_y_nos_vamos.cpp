@@ -78,7 +78,34 @@ void modificar(struct new_product tabla[],int comp_prec,int comp_stock,int cont 
 		}					
 	}
 }
+
+//aqui va el de tiket 
+void minimo(struct new_product tabla[],int cont){
+	int aux,min;
 	
+	for(int i=0;i<cont;i++){
+		min=i;
+		for(int j=i+1;j<cont;j++){
+			if(tabla[j].precio < tabla[min].precio){
+				min=j;
+			 }
+		 }
+		 aux=tabla[i].precio;
+		 tabla[i].precio=tabla[min].precio;
+		 tabla[min].precio=aux;
+	 }
+	 printf("Ordenados del menor al mayor\n");
+	 for(int i=0;i<cont;i++){
+	 	printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
+	 }
+}
+	
+void maximo(struct new_product tabla[],int cont){
+printf("Ordenados del mayor a menor\n");
+	 for(int i=cont;i>=0;i--){
+	 	printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
+	 }
+}
 
  
 int main(){
@@ -132,7 +159,9 @@ int main(){
 			break;
 			
 		case 'c':     // MOSTRAR INVENTARIO
-						
+			
+imprimir_lista(tabla,cont);
+			
 			break;
 			
 		case 'd':			// CALCULAR TICKET (aqui uno se marea)
@@ -141,12 +170,16 @@ int main(){
 			break;			
 						
 		case 'e':  //MINIMO VENTAS
+
+  minimo(tabla,cont);
 						
 			break;
 			
 		case 'f':  		//MAXIMO VENTAS
 						
-			break;
+			maximo(tabla,cont);
+
+break;
 			
 		case 'g':			//HISTORIAL
 						
