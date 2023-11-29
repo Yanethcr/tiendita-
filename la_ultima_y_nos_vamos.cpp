@@ -113,7 +113,9 @@ int main(){
 	int cont=0;
 	char opc;
 	int comp_prec ,comp_stock;
-	
+	time_t tiempoahora;
+	time(&tiempoahora);
+	struct tm *mitiempo =localtime(&tiempoahora);
 	
 		printf("\t\t---------------------------------------------------\n");	
 	printf("\t\t||\t\tPRODUCTOS DE LA TIENDA \t\t||\t\t\n");
@@ -159,18 +161,19 @@ int main(){
 			
 		case 'c':     // MOSTRAR INVENTARIO
 			
-imprimir_lista(tabla,cont);
+			imprimir_lista(tabla,cont);
 			
 			break;
 			
 		case 'd':			// CALCULAR TICKET (aqui uno se marea)
 		
-							
+			printf("%d/%d/%d", mitiempo->tm_mday,mitiempo->tm_mon,mitiempo->tm_year+1900);
+			
 			break;			
 						
 		case 'e':  //MINIMO VENTAS
 
-  minimo(tabla,cont);
+	  		minimo(tabla,cont);
 						
 			break;
 			
