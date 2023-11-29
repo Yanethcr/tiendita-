@@ -1,23 +1,22 @@
 #include<stdio.h>
 #include<string.h>
+#include<time.h>
 struct new_product{
-    int id;
-    float precio;
-    int stock;
-    char depa[20];
+    	int id;
+   	float precio;
+    	int stock;
+    	char depa[20];
 	char nombre[20];	
 };
-
-
 
 void nuevo(struct new_product tabla[],int cont){
 	
 	if(cont<=20){
 	printf("\n ====== NUEVO PRODUCTO ======\n");
 	printf("A que departamento pertenece su producto?: ");
-	scanf("%s", tabla[cont].nombre);									
+	scanf("%s", tabla[cont].depa);									
 	printf("Cual es su nombre?: ");
-	scanf("%s", tabla[cont].depa);
+	scanf("%s", tabla[cont].nombre);
 	printf("Cual es su precio?: ");
 	scanf("%f", &tabla[cont].precio);
 	printf("Cuantos hay en la venta?: ");
