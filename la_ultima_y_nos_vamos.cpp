@@ -6,7 +6,8 @@ struct new_product{
    	float precio;
     	int stock;
     	char depa[20];
-	char nombre[20];	
+	char nombre[20];
+		
 };
 
 void nuevo(struct new_product tabla[],int cont){
@@ -33,20 +34,7 @@ void nuevo(struct new_product tabla[],int cont){
 		printf("Se alcanzo el maximo de articulos por registrar");
 	}
 }
-
-void imprimir_lista(struct new_product tabla[],int cont){
-	if(cont<=20){
-		printf("\nID\t\tDepartamento\t\tNombre\t\tPrecio\t\tStock\n\n");
-		for(int i =0;i<cont;i++){
-			
-			printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
-		}
-		
-	}
-	
-	
-}
-
+// MODIFICAR LA LISTA DE VENTAS 
 void modificar(struct new_product tabla[],int comp_prec,int comp_stock,int cont ){
 	int buscar;
 	printf("Ingrese la id del producto al que desea modificar: ");
@@ -78,24 +66,21 @@ void modificar(struct new_product tabla[],int comp_prec,int comp_stock,int cont 
 	}
 }
 
-//aqui va el de tiket 
-void minimo(struct new_product tabla[],int cont){
-	int aux,min;
-	
-	for(int i=0;i<cont;i++){
-		min=i;
-		for(int j=i+1;j<cont;j++){
-			if(tabla[j].precio < tabla[min].precio){
-				min=j;
-			 }
-		 }
-		 aux=tabla[i].precio;
-		 tabla[i].precio=tabla[min].precio;
-		 tabla[min].precio=aux;
-	 }
-	 printf("Ordenados del menor al mayor\n");
-	 for(int i=0;i<cont;i++){
-	 	printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
+//imprime la lista 
+void imprimir_lista(struct new_product tabla[],int cont){
+struct new_product aux;
+    for (int i = 0; i < cont; i++) {
+        for (int j = 0; j < cont+1; j++) {
+            if (tabla[i].precio < tabla[j].precio) {
+                aux = tabla[i];
+                tabla[i] = tabla[j];
+                tabla[j] = aux;
+            }
+        }
+    }
+    printf("Ordenados del menor precio  al mayor\n");
+    for (int i = 0; i < cont; i++) {
+        printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d", tabla[i].id, tabla[i].depa, tabla[i].nombre, tabla[i].precio, tabla[i].stock);
 	 }
 }
 	
@@ -105,17 +90,61 @@ printf("Ordenados del mayor a menor\n");
 	 	printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d",tabla[i].id,tabla[i].depa,tabla[i].nombre,tabla[i].precio,tabla[i].stock);
 	 }
 }
+//aqui va el historial de ventas
+void historial(struct new_product tabla[],int cont){
+	int cant=0;
+	float total=0;
+	float prom;
+	printf("Historial de ventas\n");
+		printf("\nCantidad\t\tNombre del producto\t\tPrecio\t\tTotal\t\tPromedio");
+	for(int i=0;i<=cont;i++){
+		cant++;
+		total+=tabla[i].precio;
+		prom=total/cant;
+		printf("\n%d\t\t\t%s\t\t%.2f\t\t\t%.2f",cant,tabla[i].nombre,tabla[i].precio,total,prom);
+	}
+	
+}
+/*
+//aqui va el fichero
+void fichero(struct new_product tabla[],int cont,tm*tiempo){
+int cant=0;
+float subt=0;
+float promv;
+FILE*F;
+
+printf("Resumen de ventas");
+//printf("\nNumero de venta\t\tSubtotal de la compra\t\tPromedio de ventas");
+time(tm*tiempo);
+t=localtime(&tiempod);
+for(int i=0;i<=cont;i++)
+cant++;
+subt+=tabla[i.precio];
+promv=subt/cant;
+F=fopen("Resumen_ventas.txt","a");
+if (F==NULL){
+	printf("Error al acceder")
+	}else{
+	printf("\nNumero de venta\t\tSubtotal de la compra\t\tPromedio de ventas");
+	printf("\n%d\t\t.2f\t\t.2f",cant,subt,promv);
+	}
+	fdose(F);
+}
+*/
+
 
  
 int main(){
 	struct new_product tabla[20];
+	struct new_product vetas[20 ];
 	char modif[2];
 	int cont=0;
 	char opc;
 	int comp_prec ,comp_stock;
-	time_t tiempoahora;
-	time(&tiempoahora);
-	struct tm *mitiempo =localtime(&tiempoahora);
+	time_t tiempod;
+	struct tm*tiempo;
+	
+
 	
 		printf("\t\t---------------------------------------------------\n");	
 	printf("\t\t||\t\tPRODUCTOS DE LA TIENDA \t\t||\t\t\n");
@@ -165,15 +194,16 @@ int main(){
 			
 			break;
 			
-		case 'd':			// CALCULAR TICKET (aqui uno se marea)
+		case 'd':			// CALCULAR TICKET 
+		    
 		
-			printf("%d/%d/%d", mitiempo->tm_mday,mitiempo->tm_mon,mitiempo->tm_year+1900);
+		//	printf("%d/%d/%d", mitiempo->tm_mday,mitiempo->tm_mon,mitiempo->tm_year+1900);
 			
 			break;			
 						
 		case 'e':  //MINIMO VENTAS
 
-	  		minimo(tabla,cont);
+	  		imprimir_lista(tabla,cont);
 						
 			break;
 			
@@ -181,14 +211,14 @@ int main(){
 						
 			maximo(tabla,cont);
 
-break;
+                break;
 			
 		case 'g':			//HISTORIAL
-						
+			historial(tabla,cont);	
 			break;
 			
 		case 'h':		//GUARDAR RESUMEN DE VENTAS
-			
+			//printf("\nHora actual: %02d:%02d:%02d", mitiempo->tm_hour, mitiempo->tm_min, mitiempo->tm_sec))
 			
 			break;
 		
