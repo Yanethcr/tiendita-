@@ -231,7 +231,5 @@ int main(){
 	}
 	}while(opc>='a' && opc<='h');		
 	printf("\nPROGRAMA FINALIZADO");
-	return 0;	
-	
-	
+	return 0;		
 }
