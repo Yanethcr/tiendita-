@@ -54,7 +54,7 @@ void modificar(struct new_product tabla[],int comp_prec,int comp_stock,int cont 
 	}
 	if(comp_stock == 0){				
 		
-		for(int i=0;i<cont;i++){
+		for(int i=cont-1;i>=0;i--){
 			
 			if(buscar == tabla[i].id){
 				printf("\nCual es la nueva cantidad de %s: ", tabla[i].nombre);
@@ -78,12 +78,18 @@ struct new_product aux;
             }
         }
     }
-    printf("Ordenados del menor precio  al mayor\n");
+printf("\nID\t\tDepartamento\t\tNombre\t\tPrecio\t\tStock\n\n");		
     for (int i = 0; i < cont; i++) {
-        printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d", tabla[i].id, tabla[i].depa, tabla[i].nombre, tabla[i].precio, tabla[i].stock);
+	    
+	    printf("%-16d", tabla[i].id);					
+	    printf("%-24s", tabla[i].depa);     
+	    printf("%-16s", tabla[i].nombre);
+	    printf("%-16.2f", tabla[i].precio);
+	    printf("%-20d\n", tabla[i].stock);
+      //  printf("\n%d\t\t%s\t\t%s\t\t%.2f\t\t%d", tabla[i].id, tabla[i].depa, tabla[i].nombre, tabla[i].precio, tabla[i].stock);
 	 }
 }
-	
+	//MAXIMO Y MINIMO
 void maximo(struct new_product tabla[],int cont){
 printf("Ordenados del mayor a menor\n");
 	 for(int i=cont;i>=0;i--){
